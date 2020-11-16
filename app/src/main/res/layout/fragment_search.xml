@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SearchFragment">
+    tools:background="@color/colorBackgroundGray"
+    tools:context=".ui.SearchFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Search"
-        android:textColor="@android:color/white" />
-
-</FrameLayout>
+        tools:listitem="@layout/track_list_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>
