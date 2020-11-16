@@ -7,6 +7,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- PlayerActivity theme. -->
+    <style name="PlayerActivityTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorBackgroundGray</item>
+        <item name="colorPrimaryDark">#111111</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">12sp</item>
     </style>
