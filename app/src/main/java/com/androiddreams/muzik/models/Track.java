@@ -3,13 +3,13 @@ package com.androiddreams.muzik.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Track {
-    @SerializedName("title")
+    @SerializedName("song")
     private String mTitle;
-    @SerializedName("username")
+    @SerializedName("artist")
     private String mArtist;
-    @SerializedName("straem_url")
-    private String mStreanURL;
-    @SerializedName("artwork_url")
+    @SerializedName("link")
+    private String mStreamURL;
+    @SerializedName("icon")
     private String mArtWorkURL;
 
     public String getTitle() {
@@ -29,11 +29,11 @@ public class Track {
     }
 
     public String getmStreanURL() {
-        return mStreanURL;
+        return mStreamURL;
     }
 
-    public void setmStreanURL(String mStreanURL) {
-        this.mStreanURL = mStreanURL;
+    public void setmStreamURL(String mStreamURL) {
+        this.mStreamURL = mStreamURL;
     }
 
     public String getmArtWorkURL() {

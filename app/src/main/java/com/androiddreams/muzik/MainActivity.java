@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
         /*
         // Build the media items.
         MediaItem firstItem = MediaItem.fromUri(Uri.parse("http://13.126.87.166/faded.mp3"));
