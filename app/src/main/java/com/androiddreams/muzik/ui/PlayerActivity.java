@@ -70,6 +70,7 @@ public class PlayerActivity extends AppCompatActivity {
         ivArtwork = findViewById(R.id.ivArtwork);
         tvTitle = findViewById(R.id.tvTitle);
         tvArtist = findViewById(R.id.tvArtist);
+        tvTitle.setSelected(true);
 
         /*
         // Receiving song information from intent

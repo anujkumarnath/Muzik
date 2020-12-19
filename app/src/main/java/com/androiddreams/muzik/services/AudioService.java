@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.androiddreams.muzik.R;
 import com.androiddreams.muzik.models.Track;
 import com.androiddreams.muzik.ui.PlayerActivity;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -26,6 +27,8 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerNotificationManager;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+
+import java.util.concurrent.ExecutionException;
 
 public class AudioService extends Service {
 
@@ -104,12 +107,35 @@ public class AudioService extends Service {
                         @Override
                         public Bitmap getCurrentLargeIcon(Player player, PlayerNotificationManager.BitmapCallback callback) {
                             android.util.Log.d(TAG, "getCurrentLargeIcon: Called");
-                            RequestOptions options = new RequestOptions()
-                                    .centerCrop()
-                                    .placeholder(R.mipmap.ic_launcher_round) // change placeholder
-                                    .error(R.mipmap.ic_launcher_round);
 
-                            return BitmapFactory.decodeResource(getResources(), R.drawable.test_album_art_small);
+                            MediaItem mediaItem = player.getCurrentMediaItem();
+                            Track track = (Track) mediaItem.playbackProperties.tag;
+
+                            // load the media image asyncronously
+                            Thread thread = new Thread(() -> {
+                                RequestOptions options = new RequestOptions()
+                                        .centerCrop()
+                                        .placeholder(R.mipmap.ic_launcher_round) // change placeholder
+                                        .error(R.mipmap.ic_launcher_round);
+                                try {
+                                    android.util.Log.d(TAG, "Call toh oise");
+                                    Bitmap bitmap = Glide.with(getApplicationContext())
+                                            .asBitmap()
+                                            .load(Uri.parse(track.getmArtWorkURL()))
+                                            .apply(options)
+                                            .submit()
+                                            .get();
+                                    callback.onBitmap(bitmap);
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
+                            thread.start();
+                            return null;
+//                            return BitmapFactory.decodeResource(getResources(), R.drawable.test_album_art_small);
                         }
                     },
                     new PlayerNotificationManager.NotificationListener() {

@@ -89,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.On
         tvArtist = findViewById(R.id.tvArtist);
         ivThumbnail = findViewById(R.id.ivAlbumArt);
 
+        tvTitle.setSelected(true);
+        tvArtist.setSelected(true);
+
         Intent intent = new Intent(MainActivity.this, AudioService.class);
         startService(intent);
         bindService(intent, conn, BIND_AUTO_CREATE);
