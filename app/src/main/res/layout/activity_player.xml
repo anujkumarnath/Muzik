@@ -63,7 +63,7 @@
         app:srcCompat="@drawable/ic_toolbar_more" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/ivArtwork"
         android:layout_width="340dp"
         android:layout_height="340dp"
         android:layout_marginTop="64dp"

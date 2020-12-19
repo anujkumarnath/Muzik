@@ -28,7 +28,7 @@ public class Track {
         this.mArtist = mArtist;
     }
 
-    public String getmStreanURL() {
+    public String getmStreamURL() {
         return mStreamURL;
     }
 

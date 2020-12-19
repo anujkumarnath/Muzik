@@ -5,4 +5,7 @@
     <string name="title_menu_library">Your library</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="exoplayer_channel_name">CHANNEL_NAME</string>
+    <string name="exoplayer_channel_description">CHANNEL_DESCRIPTION</string>
+    <string name="media_url_mp3">http://13.126.87.166/faded.mp3</string>
 </resources>

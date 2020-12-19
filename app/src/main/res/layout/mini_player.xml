@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/ivAlbumArt"
             android:layout_width="56dp"
             android:layout_height="56dp"
             app:layout_constraintBottom_toTopOf="@+id/divider"
@@ -22,7 +22,7 @@
             android:text="Alone"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/tvArtist"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/ivAlbumArt"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
