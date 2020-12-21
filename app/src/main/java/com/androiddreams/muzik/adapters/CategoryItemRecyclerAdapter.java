@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,18 +33,12 @@ public class CategoryItemRecyclerAdapter extends RecyclerView.Adapter<CategoryIt
     @NonNull
     @Override
     public CategoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CategoryItemViewHolder(LayoutInflater.from(context).inflate(R.layout.category_row_items, parent, false));
+        return new CategoryItemViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_category_card, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryItemViewHolder holder, int position) {
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.movie2) // change placeholder
-                .error(R.drawable.movie1);
-
-        Glide.with(context).load(cardItems.get(position).getImageURL()).apply(options).into(holder.itemImage);
-        //holder.itemImage.setImageResource(categoryItemList.get(position).getImageUrl());
+        holder.bind(position);
     }
 
     @Override
@@ -53,15 +48,29 @@ public class CategoryItemRecyclerAdapter extends RecyclerView.Adapter<CategoryIt
 
     public class CategoryItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView itemImage;
+        TextView tvTitle;
+
         public CategoryItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemImage = itemView.findViewById(R.id.item_image);
+            itemImage = itemView.findViewById(R.id.ivPhoto);
+            tvTitle = itemView.findViewById(R.id.tvCategoryTitle);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             onCardClickListener.onCardClick(cardItems.get(getAdapterPosition()), endpoint);
+        }
+
+        public void bind(int position) {
+            tvTitle.setText(cardItems.get(position).getTitle());
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.movie2) // change placeholder
+                    .error(R.drawable.movie1);
+
+            Glide.with(context).load(cardItems.get(position).getImageURL()).apply(options).into(itemImage);
+            //holder.itemImage.setImageResource(categoryItemList.get(position).getImageUrl());
         }
     }
 

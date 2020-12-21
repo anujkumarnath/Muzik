@@ -2,6 +2,8 @@ package com.androiddreams.muzik.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,10 @@ import com.androiddreams.muzik.network.APIClient;
 import com.androiddreams.muzik.network.ServerInterface;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +34,7 @@ import retrofit2.Response;
 public class SearchFragment extends Fragment {
 
     private OnItemClickListener onItemClickListener;
+    private Timer timer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,58 +54,52 @@ public class SearchFragment extends Fragment {
 
         ServerInterface serverInterface = APIClient.getClient().create(ServerInterface.class);
         TextInputEditText etSearch = root.findViewById(R.id.etSearch);
-        Button button = root.findViewById(R.id.btnSearch);
-        button.setOnClickListener(view -> {
-            Call<List<Track>> callSearch = serverInterface.getSearchResult(etSearch.getText().toString());
-            callSearch.enqueue(new Callback<List<Track>>() {
-                @Override
-                public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
-                    if (response.body() != null) {
-                        adapter.setData(response.body());
-                        recyclerView.setAdapter(adapter);
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<List<Track>> call, Throwable t) {
-                    call.cancel();
-                }
-            });
-        });
-
-        /*
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
             public void afterTextChanged(Editable editable) {
-                Call<List<Track>> callSearch = serverInterface.getSearchResult(editable.toString());
-                callSearch.enqueue(new Callback<List<Track>>() {
-                    @Override
-                    public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
-                        if (response.body() != null) {
-                            adapter.setData(response.body());
-                            recyclerView.setAdapter(adapter);
-                        }
-                    }
+                // user typed: start the timer
+                if (editable.toString().equals("")) {
+                    adapter.setData(new ArrayList<>());
+                } else {
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            Call<List<Track>> callSearch = serverInterface.getSearchResult(editable.toString());
+                            callSearch.enqueue(new Callback<List<Track>>() {
+                                @Override
+                                public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
+                                    if (response.body() != null) {
+                                        adapter.setData(response.body());
+                                        recyclerView.setAdapter(adapter);
+                                    }
+                                }
 
-                    @Override
-                    public void onFailure(Call<List<Track>> call, Throwable t) {
-                        call.cancel();
-                    }
-                });
+                                @Override
+                                public void onFailure(Call<List<Track>> call, Throwable t) {
+                                    call.cancel();
+                                }
+                            });
+                            // do your actual work here
+                        }
+                    }, 600); // 600ms delay before the timer executes the „run“ method from TimerTask
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // nothing to do here
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // user is typing: reset already started timer (if existing)
+                if (timer != null) {
+                    timer.cancel();
+                }
             }
         });
-         */
-
 
         return root;
     }
