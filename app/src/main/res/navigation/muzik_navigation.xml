@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.androiddreams.muzik.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_filter"
+            app:destination="@id/navigation_filter" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.androiddreams.muzik.ui.SearchFragment"
@@ -20,4 +24,11 @@
         android:name="com.androiddreams.muzik.ui.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
+
+    <fragment
+        android:id="@+id/navigation_filter"
+        android:name="com.androiddreams.muzik.ui.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" >
+    </fragment>
 </navigation>

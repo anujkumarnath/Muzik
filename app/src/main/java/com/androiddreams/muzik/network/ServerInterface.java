@@ -11,4 +11,8 @@ import retrofit2.http.Path;
 public interface ServerInterface {
     @GET("/search/{keyword}")
     Call<List<Track>> getSearchResult(@Path("keyword") String keyword);
+
+    @GET("/{endpoint}/{keyword}")
+    Call<List<Track>> getFilterResult(@Path("endpoint") String endpoint, @Path("keyword") String keyword);
 }
+

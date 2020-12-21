@@ -6,9 +6,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.session.MediaSession;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -155,6 +157,9 @@ public class AudioService extends Service {
             //playerNotificationManager.setPriority(NotificationCompat.PRIORITY_MAX);
             playerNotificationManager.setColorized(true);
             playerNotificationManager.setPlayer(mPlayer);
+            MediaSessionCompat mediaSession = new MediaSessionCompat(this, "ExoPlayer");
+            mediaSession.setActive(true);
+            playerNotificationManager.setMediaSessionToken(mediaSession.getSessionToken());
         }
     }
 

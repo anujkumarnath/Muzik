@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/colorBackgroundGray"
+    android:background="@color/colorBackgroundGray"
     tools:context=".ui.SearchFragment" >
 
     <androidx.recyclerview.widget.RecyclerView

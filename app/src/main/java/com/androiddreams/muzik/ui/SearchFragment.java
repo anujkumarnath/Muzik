@@ -1,23 +1,18 @@
 package com.androiddreams.muzik.ui;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androiddreams.muzik.MainActivity;
+import com.androiddreams.muzik.Listeners.OnItemClickListener;
 import com.androiddreams.muzik.R;
 import com.androiddreams.muzik.adapters.SearchResultAdapter;
 import com.androiddreams.muzik.models.Track;
@@ -25,7 +20,6 @@ import com.androiddreams.muzik.network.APIClient;
 import com.androiddreams.muzik.network.ServerInterface;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -108,10 +102,6 @@ public class SearchFragment extends Fragment {
 
 
         return root;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Track track);
     }
 
     @Override

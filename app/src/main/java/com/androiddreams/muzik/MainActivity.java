@@ -16,6 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.androiddreams.muzik.Listeners.OnItemClickListener;
 import com.androiddreams.muzik.models.Track;
 import com.androiddreams.muzik.services.AudioService;
 import com.androiddreams.muzik.ui.PlayerActivity;
@@ -30,7 +31,7 @@ import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements SearchFragment.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements OnItemClickListener {
 
     PlayerControlView playerControlView;
     SimpleExoPlayer player;
