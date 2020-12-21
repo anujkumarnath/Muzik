@@ -66,8 +66,8 @@ public class CategoryItemRecyclerAdapter extends RecyclerView.Adapter<CategoryIt
             tvTitle.setText(cardItems.get(position).getTitle());
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.drawable.movie2) // change placeholder
-                    .error(R.drawable.movie1);
+                    .placeholder(R.drawable.test_album_art_large) // change placeholder
+                    .error(R.drawable.test_album_art_large);
 
             Glide.with(context).load(cardItems.get(position).getImageURL()).apply(options).into(itemImage);
             //holder.itemImage.setImageResource(categoryItemList.get(position).getImageUrl());

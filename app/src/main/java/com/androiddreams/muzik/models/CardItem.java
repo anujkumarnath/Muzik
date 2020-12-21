@@ -7,7 +7,7 @@ public class CardItem {
     @SerializedName("title")
     private String title;
 
-    @SerializedName("link")
+    @SerializedName("poster")
     private String imageURL;
 
     public String getTitle() {
