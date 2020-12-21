@@ -1,5 +1,6 @@
 package com.androiddreams.muzik.network;
 
+import com.androiddreams.muzik.models.CardItem;
 import com.androiddreams.muzik.models.Track;
 
 import java.util.List;
@@ -14,5 +15,8 @@ public interface ServerInterface {
 
     @GET("/{endpoint}/{keyword}")
     Call<List<Track>> getFilterResult(@Path("endpoint") String endpoint, @Path("keyword") String keyword);
+
+    @GET("/{endpoint}")
+    Call<List<CardItem>> getCardItems(@Path("endpoint") String endpoint);
 }
 
