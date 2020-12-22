@@ -54,7 +54,8 @@ public class CategoryItemRecyclerAdapter extends RecyclerView.Adapter<CategoryIt
             super(itemView);
             itemImage = itemView.findViewById(R.id.ivPhoto);
             tvTitle = itemView.findViewById(R.id.tvCategoryTitle);
-            itemView.setOnClickListener(this);
+            if (cardItems.get(0).getImageURL() != null)
+                itemView.setOnClickListener(this);
         }
 
         @Override

@@ -58,4 +58,16 @@
         </ViewSwitcher>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:id="@+id/tvSearchPageInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tap the searchbar to search for a song."
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rvSearchResult"
+        app:layout_constraintStart_toStartOf="@+id/rvSearchResult"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

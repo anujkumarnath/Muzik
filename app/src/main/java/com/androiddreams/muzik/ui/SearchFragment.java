@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
@@ -52,20 +53,23 @@ public class SearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
         ViewSwitcher viewSwitcher = root.findViewById(R.id.viewSwitcher);
         TextView textView = root.findViewById(R.id.tvSearch);
+        TextView tvSearchPageInfo = root.findViewById(R.id.tvSearchPageInfo);
         TextInputEditText etSearch = root.findViewById(R.id.etSearch);
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         textView.setOnClickListener(view -> {
             viewSwitcher.showNext();
             etSearch.requestFocus();
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+            tvSearchPageInfo.setVisibility(View.GONE);
         });
 
         etSearch.setOnTouchListener((v, event) -> {
             if(event.getAction() == MotionEvent.ACTION_UP) {
                 if(event.getRawX() <= (etSearch.getLeft() + etSearch.getPaddingLeft() + etSearch.getCompoundDrawables()[0].getBounds().width())) {
-                        etSearch.setText("");
-                        viewSwitcher.showPrevious();
-                        imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
+                    etSearch.setText("");
+                    viewSwitcher.showPrevious();
+                    tvSearchPageInfo.setVisibility(View.VISIBLE);
+                    imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
                     return true;
                 }
             }
@@ -119,6 +123,7 @@ public class SearchFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<List<Track>> call, Throwable t) {
+                                    Toast.makeText(getContext(), "CANNOT REACH TO SERVER", Toast.LENGTH_SHORT).show();
                                     call.cancel();
                                 }
                             });

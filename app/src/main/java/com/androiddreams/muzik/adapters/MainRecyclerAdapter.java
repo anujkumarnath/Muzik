@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -61,7 +62,14 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
             @Override
             public void onFailure(Call<List<CardItem>> call, Throwable t) {
+                Toast.makeText(context, "CANNOT REACH TO SERVER", Toast.LENGTH_LONG).show();
                 call.cancel();
+                List<CardItem> cardItems = new ArrayList<>();
+                cardItems.add(new CardItem());
+                cardItems.add(new CardItem());
+                cardItems.add(new CardItem());
+                cardItems.add(new CardItem());
+                holder.bind(cardItems, endpoints[position]);
             }
         });
     }
