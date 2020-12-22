@@ -12,6 +12,7 @@
         android:id="@+id/playerControlView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:controller_layout_id="@layout/mini_player"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"

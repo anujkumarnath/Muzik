@@ -28,7 +28,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     private Context context;
     public String[] categories;
-    private String[] endpoints = new String[] {"language", "genre", "artist", "genre"};
+    private String[] endpoints = new String[] {"language", "genre", "artist", "Edm"};
     private CategoryItemRecyclerAdapter.OnCardClickListener cardClickListener;
 
     public MainRecyclerAdapter(Context context, String[] categories, CategoryItemRecyclerAdapter.OnCardClickListener cardClickListener) {

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -132,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             player.release();
         }
         */
+        if (playerControlView.getVisibility() == View.GONE)
+            playerControlView.setVisibility(View.VISIBLE);
         MediaItem mediaItem = new MediaItem.Builder().setUri(Uri.parse(track.getmStreamURL())).setTag(track).build();
         player.addMediaItem(mediaItem);
         player.next();
@@ -163,7 +166,14 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                     .placeholder(R.mipmap.ic_launcher_round) // change placeholder
                     .error(R.mipmap.ic_launcher_round);
 
-            Glide.with(MainActivity.this).load(track.getmArtWorkURL()).apply(options).into(ivThumbnail);
+            Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).apply(options).into(ivThumbnail);
         }
+
+//        @Override
+//        public void onPlaybackStateChanged(int state) {
+//            if (state == ExoPlayer.STATE_ENDED) {
+//                playerControlView.setVisibility(View.GONE);
+//            }
+//        }
     }
 }
