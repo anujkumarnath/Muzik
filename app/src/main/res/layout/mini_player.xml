@@ -86,8 +86,8 @@
             app:scrubber_enabled_size="0dp"
             app:scrubber_disabled_size="0dp"
             app:scrubber_dragged_size="0dp"
-            app:bar_height="1px"
-            app:touch_target_height="1px"
+            app:bar_height="1dp"
+            app:touch_target_height="1dp"
             app:unplayed_color="@android:color/transparent"
             app:buffered_color="@android:color/transparent"
             app:played_color="@android:color/white" />
