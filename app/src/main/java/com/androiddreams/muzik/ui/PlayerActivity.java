@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,6 +63,7 @@ public class PlayerActivity extends AppCompatActivity {
         public void onServiceDisconnected(ComponentName componentName) {
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,7 @@ public class PlayerActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvArtist = findViewById(R.id.tvArtist);
         tvTitle.setSelected(true);
+        ImageView ivCloseButton = findViewById(R.id.ivCloseButton);
 
         /*
         // Receiving song information from intent
@@ -111,6 +114,10 @@ public class PlayerActivity extends AppCompatActivity {
         player.play();
 
          */
+    }
+
+    public void onCloseButtonClicked(View view) {
+        finish();
     }
 
     private class PlaybackStateListener implements Player.EventListener {

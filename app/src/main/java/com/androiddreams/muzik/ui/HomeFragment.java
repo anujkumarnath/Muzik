@@ -30,8 +30,7 @@ public class HomeFragment extends Fragment implements CategoryItemRecyclerAdapte
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.main_recycler);
