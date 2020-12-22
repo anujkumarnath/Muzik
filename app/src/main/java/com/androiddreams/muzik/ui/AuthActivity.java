@@ -2,12 +2,15 @@ package com.androiddreams.muzik.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.androiddreams.muzik.MainActivity;
 import com.androiddreams.muzik.R;
 import com.androiddreams.muzik.models.AuthRequest;
 import com.androiddreams.muzik.models.AuthResponse;
@@ -62,6 +65,14 @@ public class AuthActivity extends AppCompatActivity {
                     public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (response.body() != null) {
                             Toast.makeText(AuthActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            if (response.body().getMessage().equals("auth_successful")) {
+                                SharedPreferences sp = getSharedPreferences("your_prefs", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putBoolean("is_logged_in", true);
+                                editor.apply();
+                                Intent mainActivityIntent = new Intent(AuthActivity.this, MainActivity.class);
+                                startActivity(mainActivityIntent);
+                            }
                         }
                     }
 

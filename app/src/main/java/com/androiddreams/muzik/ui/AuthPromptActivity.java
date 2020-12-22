@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import com.androiddreams.muzik.MainActivity;
 import com.androiddreams.muzik.R;
 import com.google.android.material.button.MaterialButton;
 
@@ -17,6 +20,14 @@ public class AuthPromptActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sp = getSharedPreferences("your_prefs", Activity.MODE_PRIVATE);
+        if(sp.getBoolean("is_logged_in", false)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            return;
+        }
+
         setContentView(R.layout.activity_auth_prompt);
         fragmentManager = getSupportFragmentManager();
         MaterialButton btnLogin = findViewById(R.id.btnLogin);
