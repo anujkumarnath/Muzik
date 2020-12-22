@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorBackgroundGray</item>
         <item name="colorPrimaryDark">#111111</item>
@@ -21,26 +21,4 @@
     <style name="BottomNavigationView.Inactive" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">11sp</item>
     </style>
-
-    <style name="TextAppearance.Muzik.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
-    <style name="Widget.Done.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.Muzik.TextInputLayout.HintText</item>
-        <item name="hintTextColor">@color/colorAccent</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="boxStrokeColor">@color/colorAccent</item>
-        <item name="boxStrokeWidth">@dimen/searchEditTextStrokeColor</item>
-        <item name="boxStrokeWidthFocused">@dimen/searchEditTextStrokeColor</item>
-        <item name="android:textColorHint">@color/colorHint</item>
-    </style>
-
-    <style name="TextAppearance.Muzik.TextInputEditText.Text" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textCursorDrawable">@drawable/cursor</item>
-    </style>
-
-    <color name="colorHint">#C7F4436C</color>
-    <dimen name="searchEditTextStrokeColor">4dp</dimen>
 </resources>

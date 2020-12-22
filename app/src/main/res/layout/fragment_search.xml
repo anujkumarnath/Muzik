@@ -14,32 +14,48 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         tools:listitem="@layout/track_list_item" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        style="@style/Widget.Done.TextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:elevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSearch"
-            android:background="@android:color/darker_gray"
-            android:drawableEnd="@drawable/ic_backspace_search_edit_text"
+        <ViewSwitcher
+            android:id="@+id/viewSwitcher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
-            style="@style/TextAppearance.Muzik.TextInputEditText.Text"
-            android:selectAllOnFocus="true"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvSearch"
+                android:layout_margin="8dp"
+                android:background="@drawable/searchbar_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="16dp"
+                android:textColor="@android:color/white"
+                android:text="Search"
+                android:textStyle="bold" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearch"
+                android:background="@android:color/darker_gray"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_search_box_back"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="@android:color/white"
+                android:drawablePadding="8dp"
+                android:selectAllOnFocus="true"
+                android:singleLine="true" />
+        </ViewSwitcher>
+    </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

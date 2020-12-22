@@ -1,13 +1,22 @@
 package com.androiddreams.muzik.ui;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,6 +50,39 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_search, container, false);
+        ViewSwitcher viewSwitcher = root.findViewById(R.id.viewSwitcher);
+        TextView textView = root.findViewById(R.id.tvSearch);
+        TextInputEditText etSearch = root.findViewById(R.id.etSearch);
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        textView.setOnClickListener(view -> {
+            viewSwitcher.showNext();
+            etSearch.requestFocus();
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+        });
+
+        etSearch.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(event.getRawX() <= (etSearch.getLeft() + etSearch.getPaddingLeft() + etSearch.getCompoundDrawables()[0].getBounds().width())) {
+                        etSearch.setText("");
+                        viewSwitcher.showPrevious();
+                        imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
+                    return true;
+                }
+            }
+            return false;
+        });
+
+//        root.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+//            Rect r = new Rect();
+//            root.getWindowVisibleDisplayFrame(r);
+//            int screenHeight = root.getRootView().getHeight();
+//            int keypadHeight = screenHeight - r.bottom;
+//            if (keypadHeight > screenHeight * 0.15) {
+//                viewSwitcher.showPrevious();
+//            } else {
+//            }
+//        });
+
         RecyclerView recyclerView = root.findViewById(R.id.rvSearchResult);
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         SearchResultAdapter adapter = new SearchResultAdapter(getContext());
@@ -53,7 +95,6 @@ public class SearchFragment extends Fragment {
         });
 
         ServerInterface serverInterface = APIClient.getClient().create(ServerInterface.class);
-        TextInputEditText etSearch = root.findViewById(R.id.etSearch);
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,4 +154,5 @@ public class SearchFragment extends Fragment {
             throw new ClassCastException(context.toString() + "must implement OnItemClickListener");
         }
     }
+
 }
