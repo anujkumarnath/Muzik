@@ -7,5 +7,6 @@
 
     <color name="colorBackgroundGray">#222222</color>
     <color name="bottomNavIconInactive">#C1FFFFFF</color>
-    <color name="colorCursor">#C7F4436C</color>
+    <color name="colorLoginButton">@android:color/holo_green_dark</color>
+    <color name="colorSignupButton">@android:color/holo_blue_dark</color>
 </resources>
