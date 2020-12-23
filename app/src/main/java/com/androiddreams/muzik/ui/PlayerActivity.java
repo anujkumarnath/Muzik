@@ -2,27 +2,35 @@ package com.androiddreams.muzik.ui;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.palette.graphics.Palette;
 
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.androiddreams.muzik.MainActivity;
 import com.androiddreams.muzik.R;
 import com.androiddreams.muzik.models.Track;
 import com.androiddreams.muzik.services.AudioService;
+import com.androiddreams.muzik.utilities.ColorPaletteGenerator;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.TrackGroupArray;
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 
@@ -36,6 +44,9 @@ public class PlayerActivity extends AppCompatActivity {
     private TextView tvTitle;
     private TextView tvArtist;
     private ImageView ivArtwork;
+    private Bitmap bitmap;
+    private ConstraintLayout rootLayout;
+    private RequestListener<Drawable> requestListener;
 
     private ServiceConnection conn = new ServiceConnection() {
         @Override
@@ -50,13 +61,17 @@ public class PlayerActivity extends AppCompatActivity {
             Track track = (Track) mediaItem.playbackProperties.tag;
             tvTitle.setText(track.getTitle());
             tvArtist.setText(track.getArtist());
+            rootLayout = findViewById(R.id.rootLayout);
+            requestListener = new GlideRequestListener();
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher_round) // change placeholder
                     .error(R.mipmap.ic_launcher_round);
 
-            Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).apply(options).into(ivArtwork);
+            Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).
+                    listener(requestListener).
+                    apply(options).into(ivArtwork);
         }
 
         @Override
@@ -73,9 +88,7 @@ public class PlayerActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvArtist = findViewById(R.id.tvArtist);
         tvTitle.setSelected(true);
-        ImageView ivCloseButton = findViewById(R.id.ivCloseButton);
 
-        /*
         // Receiving song information from intent
         Intent intentFromMainActivity = getIntent();
         if (intentFromMainActivity != null) {
@@ -88,7 +101,6 @@ public class PlayerActivity extends AppCompatActivity {
 
             Glide.with(this).load(mArtworkURL).apply(options).into(ivArtwork);
         }
-        */
 
         Intent intent = new Intent(this, AudioService.class);
         startService(intent);
@@ -114,6 +126,7 @@ public class PlayerActivity extends AppCompatActivity {
         player.play();
 
          */
+
     }
 
     public void onCloseButtonClicked(View view) {
@@ -140,7 +153,26 @@ public class PlayerActivity extends AppCompatActivity {
                     .placeholder(R.mipmap.ic_launcher_round) // change placeholder
                     .error(R.mipmap.ic_launcher_round);
 
-            Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).apply(options).into(ivArtwork);
+            Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).
+                    listener(requestListener).
+                    apply(options).into(ivArtwork);
+        }
+    }
+
+    private class GlideRequestListener implements RequestListener<Drawable> {
+        @Override
+        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+            return false;
+        }
+
+        @Override
+        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+            GradientDrawable gd = new GradientDrawable();
+            bitmap = ((BitmapDrawable) resource).getBitmap();
+            Palette palette = Palette.from(bitmap).generate();
+            gd.setColors(new int[] {new ColorPaletteGenerator().getBackgroundColorFromPalette(palette), 0xE00000});
+            rootLayout.setBackground(gd);
+            return false;
         }
     }
 }

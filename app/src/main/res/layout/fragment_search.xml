@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundGray"
     tools:context=".ui.SearchFragment" >
 
     <androidx.recyclerview.widget.RecyclerView
@@ -22,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:elevation="8dp"
+        android:background="#1A000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,11 +45,11 @@
                 android:textStyle="bold" />
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSearch"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/bg_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/ic_search_box_back"
-                android:paddingStart="8dp"
+                android:paddingStart="16dp"
                 android:paddingEnd="8dp"
                 android:textColor="@android:color/white"
                 android:drawablePadding="8dp"
