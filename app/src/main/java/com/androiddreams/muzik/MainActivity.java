@@ -181,6 +181,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             else
                 ivFavourite.setImageResource(R.drawable.ic_outline_favorite_24dp);
         }
+        if (navController.getCurrentDestination().getId() == R.id.navigation_library)
+            navController.navigate(R.id.navigation_library);
     }
 
     @Override

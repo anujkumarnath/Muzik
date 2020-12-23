@@ -3,6 +3,8 @@ package com.androiddreams.muzik.ui;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.palette.graphics.Palette;
 
 import android.app.Activity;
