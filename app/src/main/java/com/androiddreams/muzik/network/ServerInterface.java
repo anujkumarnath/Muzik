@@ -20,6 +20,9 @@ public interface ServerInterface {
     @GET("/{endpoint}/{keyword}")
     Call<List<Track>> getFilterResult(@Path("endpoint") String endpoint, @Path("keyword") String keyword);
 
+    @GET("/get_favour/{username}")
+    Call<List<Track>> getFavouriteTracks(@Path("username") String username);
+
     @GET("/{endpoint}")
     Call<List<CardItem>> getCardItems(@Path("endpoint") String endpoint);
 

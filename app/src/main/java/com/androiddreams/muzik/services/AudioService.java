@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.androiddreams.muzik.models.Track;
 import com.androiddreams.muzik.ui.PlayerActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -157,9 +159,9 @@ public class AudioService extends Service {
             //playerNotificationManager.setPriority(NotificationCompat.PRIORITY_MAX);
             playerNotificationManager.setColorized(true);
             playerNotificationManager.setPlayer(mPlayer);
-            MediaSessionCompat mediaSession = new MediaSessionCompat(this, "ExoPlayer");
-            mediaSession.setActive(true);
-            playerNotificationManager.setMediaSessionToken(mediaSession.getSessionToken());
+//            MediaSessionCompat mediaSession = new MediaSessionCompat(this, "ExoPlayer");
+//            mediaSession.setActive(true);
+//            playerNotificationManager.setMediaSessionToken(mediaSession.getSessionToken());
         }
     }
 
