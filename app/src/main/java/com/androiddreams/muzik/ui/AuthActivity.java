@@ -66,8 +66,9 @@ public class AuthActivity extends AppCompatActivity {
                         if (response.body() != null) {
                             Toast.makeText(AuthActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                             if (response.body().getMessage().equals("auth_successful")) {
-                                SharedPreferences sp = getSharedPreferences("your_prefs", Activity.MODE_PRIVATE);
+                                SharedPreferences sp = getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sp.edit();
+                                editor.putString("username", authRequest.getEmail());
                                 editor.putBoolean("is_logged_in", true);
                                 editor.apply();
                                 Intent mainActivityIntent = new Intent(AuthActivity.this, MainActivity.class);

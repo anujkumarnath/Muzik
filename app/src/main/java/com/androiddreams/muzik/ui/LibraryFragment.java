@@ -1,6 +1,8 @@
 package com.androiddreams.muzik.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -59,7 +61,9 @@ public class LibraryFragment extends Fragment {
         adapter.setmOnItemClickListener(track -> onItemClickListener.onItemClick(track));
 
         ServerInterface serverInterface = APIClient.getClient().create(ServerInterface.class);
-        Call<List<Track>> callFavourite = serverInterface.getFavouriteTracks("anuj@gmail.com");
+        SharedPreferences sp = getActivity().getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
+        String username = sp.getString("username", "placeholder@email.com");
+        Call<List<Track>> callFavourite = serverInterface.getFavouriteTracks(username);
         callFavourite.enqueue(new Callback<List<Track>>() {
             @Override
             public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {

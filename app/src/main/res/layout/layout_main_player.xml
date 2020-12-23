@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         app:layout_constraintEnd_toStartOf="@+id/frameLayout"
-        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintStart_toEndOf="@+id/ivFavourite"
         app:layout_constraintTop_toTopOf="@+id/frameLayout"
         app:srcCompat="@drawable/ic_skip_prev" />
 
@@ -109,27 +109,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
-        app:layout_constraintEnd_toStartOf="@+id/imageView13"
+        app:layout_constraintEnd_toStartOf="@+id/ivUnfav"
         app:layout_constraintStart_toEndOf="@+id/frameLayout"
         app:layout_constraintTop_toTopOf="@+id/frameLayout"
         app:srcCompat="@drawable/ic_skip_next" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/ivFavourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/exo_prev"
         app:layout_constraintStart_toStartOf="@+id/exo_position"
         app:layout_constraintTop_toTopOf="@+id/exo_prev"
-        app:srcCompat="@drawable/ic_fav_add" />
+        app:srcCompat="@drawable/ic_outline_favorite_32dp" />
 
     <ImageView
-        android:id="@+id/imageView13"
+        android:id="@+id/ivUnfav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="false"
         app:layout_constraintBottom_toBottomOf="@+id/exo_next"
         app:layout_constraintEnd_toEndOf="@+id/exo_duration"
         app:layout_constraintTop_toTopOf="@+id/exo_next"
-        app:srcCompat="@drawable/ic_fav_remove" />
+        app:srcCompat="@drawable/ic_fav_remove_disabled" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

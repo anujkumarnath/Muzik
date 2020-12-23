@@ -3,6 +3,8 @@ package com.androiddreams.muzik.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Track {
+    @SerializedName("_id")
+    private String id;
     @SerializedName("song")
     private String mTitle;
     @SerializedName("artist")
@@ -11,6 +13,16 @@ public class Track {
     private String mStreamURL;
     @SerializedName("icon")
     private String mArtWorkURL;
+    @SerializedName("isFavourite")
+    private boolean isFavourite;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return mTitle;
@@ -42,5 +54,13 @@ public class Track {
 
     public void setmArtWorkURL(String mArtWorkURL) {
         this.mArtWorkURL = mArtWorkURL;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 }

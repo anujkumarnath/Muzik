@@ -1,6 +1,8 @@
 package com.androiddreams.muzik.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
@@ -127,7 +129,9 @@ public class SearchFragment extends Fragment {
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            Call<List<Track>> callSearch = serverInterface.getSearchResult(editable.toString());
+                            SharedPreferences sp = getActivity().getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
+                            String username = sp.getString("username", "placeholder@email.com");
+                            Call<List<Track>> callSearch = serverInterface.getSearchResult(editable.toString(), username);
                             callSearch.enqueue(new Callback<List<Track>>() {
                                 @Override
                                 public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {

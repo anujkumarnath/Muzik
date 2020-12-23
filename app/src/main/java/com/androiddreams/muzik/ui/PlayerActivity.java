@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.palette.graphics.Palette;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,9 +19,14 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androiddreams.muzik.R;
+import com.androiddreams.muzik.models.FavRequest;
+import com.androiddreams.muzik.models.FavResponse;
 import com.androiddreams.muzik.models.Track;
+import com.androiddreams.muzik.network.APIClient;
+import com.androiddreams.muzik.network.ServerInterface;
 import com.androiddreams.muzik.services.AudioService;
 import com.androiddreams.muzik.utilities.ColorPaletteGenerator;
 import com.bumptech.glide.Glide;
@@ -34,6 +41,10 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PlayerActivity extends AppCompatActivity {
 
     private long playbackPostion = 0;
@@ -44,6 +55,8 @@ public class PlayerActivity extends AppCompatActivity {
     private TextView tvTitle;
     private TextView tvArtist;
     private ImageView ivArtwork;
+    private ImageView ivFavourite;
+    private ImageView ivUnfav;
     private Bitmap bitmap;
     private ConstraintLayout rootLayout;
     private RequestListener<Drawable> requestListener;
@@ -61,6 +74,16 @@ public class PlayerActivity extends AppCompatActivity {
             Track track = (Track) mediaItem.playbackProperties.tag;
             tvTitle.setText(track.getTitle());
             tvArtist.setText(track.getArtist());
+            if (track.isFavourite()) {
+                ivFavourite.setImageResource(R.drawable.ic_filled_favorite_32dp);
+                ivUnfav.setImageResource(R.drawable.ic_fav_remove);
+                ivUnfav.setClickable(true);
+            }
+            else {
+                ivFavourite.setImageResource(R.drawable.ic_outline_favorite_32dp);
+                ivUnfav.setImageResource(R.drawable.ic_fav_remove_disabled);
+                ivUnfav.setClickable(false);
+            }
             rootLayout = findViewById(R.id.rootLayout);
             requestListener = new GlideRequestListener();
 
@@ -87,6 +110,8 @@ public class PlayerActivity extends AppCompatActivity {
         ivArtwork = findViewById(R.id.ivArtwork);
         tvTitle = findViewById(R.id.tvTitle);
         tvArtist = findViewById(R.id.tvArtist);
+        ivFavourite = findViewById(R.id.ivFavourite);
+        ivUnfav = findViewById(R.id.ivUnfav);
         tvTitle.setSelected(true);
 
         // Receiving song information from intent
@@ -110,6 +135,9 @@ public class PlayerActivity extends AppCompatActivity {
         DefaultTimeBar timeBar = findViewById(R.id.exo_progress);
         timeBar.setEnabled(false);
 
+        FavUnfavListener onClickListener = new FavUnfavListener();
+        ivUnfav.setOnClickListener(onClickListener);
+        ivFavourite.setOnClickListener(onClickListener);
         /*
         player = new SimpleExoPlayer.Builder(this).build();
         playerControlView.setPlayer(player);
@@ -147,6 +175,16 @@ public class PlayerActivity extends AppCompatActivity {
             Track track = (Track) mediaItem.playbackProperties.tag;
             tvTitle.setText(track.getTitle());
             tvArtist.setText(track.getArtist());
+            if (track.isFavourite()) {
+                ivFavourite.setImageResource(R.drawable.ic_filled_favorite_32dp);
+                ivUnfav.setImageResource(R.drawable.ic_fav_remove);
+                ivUnfav.setClickable(true);
+            }
+            else {
+                ivFavourite.setImageResource(R.drawable.ic_outline_favorite_32dp);
+                ivUnfav.setImageResource(R.drawable.ic_fav_remove_disabled);
+                ivUnfav.setClickable(false);
+            }
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -173,6 +211,61 @@ public class PlayerActivity extends AppCompatActivity {
             gd.setColors(new int[] {new ColorPaletteGenerator().getBackgroundColorFromPalette(palette), 0xE00000});
             rootLayout.setBackground(gd);
             return false;
+        }
+    }
+
+    private class FavUnfavListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            MediaItem mediaItem = player.getCurrentMediaItem();
+            Track track = (Track) mediaItem.playbackProperties.tag;
+            SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
+            String username = sharedPreferences.getString("username", "placeholder@email.com");
+            ServerInterface serverInterface = APIClient.getClient().create(ServerInterface.class);
+            FavRequest favRequest = new FavRequest();
+            favRequest.setTrackId(track.getId());
+            favRequest.setUsername(username);
+            if (!track.isFavourite()) {
+                Call<FavResponse> favResponseCall = serverInterface.addFavourite(favRequest);
+                favResponseCall.enqueue(new Callback<FavResponse>() {
+                    @Override
+                    public void onResponse(Call<FavResponse> call, Response<FavResponse> response) {
+                        if (response.body() != null) {
+                            if (response.body().getStatus().equals("success")) {
+                                ivFavourite.setImageResource(R.drawable.ic_filled_favorite_32dp);
+                                ivUnfav.setImageResource(R.drawable.ic_fav_remove);
+                                ivUnfav.setClickable(true);
+                                track.setFavourite(true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FavResponse> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+            } else {
+                Call<FavResponse> favResponseCall = serverInterface.removeFavourite(favRequest);
+                favResponseCall.enqueue(new Callback<FavResponse>() {
+                    @Override
+                    public void onResponse(Call<FavResponse> call, Response<FavResponse> response) {
+                        if (response.body() != null) {
+                            if (response.body().getStatus().equals("success")) {
+                                ivFavourite.setImageResource(R.drawable.ic_outline_favorite_32dp);
+                                ivUnfav.setImageResource(R.drawable.ic_fav_remove_disabled);
+                                ivUnfav.setClickable(false);
+                                track.setFavourite(false);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FavResponse> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+            }
         }
     }
 }

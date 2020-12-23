@@ -21,7 +21,7 @@ public class AuthPromptActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sp = getSharedPreferences("your_prefs", Activity.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
         if(sp.getBoolean("is_logged_in", false)) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

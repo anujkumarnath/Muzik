@@ -1,6 +1,8 @@
 package com.androiddreams.muzik.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -79,7 +81,9 @@ public class FilterFragment extends Fragment {
         adapter.setmOnItemClickListener(track -> onItemClickListener.onItemClick(track));
 
         ServerInterface serverInterface = APIClient.getClient().create(ServerInterface.class);
-        Call<List<Track>> callSearch = serverInterface.getFilterResult(endpoint, keyword);
+        SharedPreferences sp = getActivity().getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
+        String username = sp.getString("username", "placeholder@email.com");
+        Call<List<Track>> callSearch = serverInterface.getFilterResult(endpoint, keyword, username);
         callSearch.enqueue(new Callback<List<Track>>() {
             @Override
             public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
