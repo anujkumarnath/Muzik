@@ -16,9 +16,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -210,8 +212,10 @@ public class PlayerActivity extends AppCompatActivity {
             GradientDrawable gd = new GradientDrawable();
             bitmap = ((BitmapDrawable) resource).getBitmap();
             Palette palette = Palette.from(bitmap).generate();
-            gd.setColors(new int[] {new ColorPaletteGenerator().getBackgroundColorFromPalette(palette), 0xE00000});
+            int paletteColour = new ColorPaletteGenerator().getBackgroundColorFromPalette(palette);
+            gd.setColors(new int[] {paletteColour, 0xE00000});
             rootLayout.setBackground(gd);
+            //setStatusBarColor(paletteColour);
             return false;
         }
     }
@@ -268,6 +272,13 @@ public class PlayerActivity extends AppCompatActivity {
                     }
                 });
             }
+        }
+    }
+
+    private void setStatusBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(color);
         }
     }
 }
