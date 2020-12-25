@@ -51,6 +51,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         notifyDataSetChanged();
     }
 
+    public List<Track> getTrackList() {
+        return mTrackList;
+    }
+
     public void setmOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
@@ -86,11 +90,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         @Override
         public void onClick(View view) {
-            mOnItemClickListener.onItemClick(mTrackList.get(getAdapterPosition()));
+            mOnItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Track track);
+        void onItemClick(int position);
     }
+
 }

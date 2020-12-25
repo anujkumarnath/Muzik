@@ -41,6 +41,8 @@ import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     @Override
-    public void onItemClick(Track track) {
+    public void onItemClick(List<MediaItem> mediaItems) {
         /*
         if (audioService != null) {
             audioService.stopForeground(true);
@@ -208,10 +210,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 //
 
 
-        play(track);
+        play(mediaItems);
     }
 
-    private void play(Track track) {
+    private void play(List<MediaItem> mediaItems) {
         /*
         mTrackURL = URL;
         if (player != null) {
@@ -221,9 +223,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         */
         if (playerControlView.getVisibility() == View.GONE)
             playerControlView.setVisibility(View.VISIBLE);
-        MediaItem mediaItem = new MediaItem.Builder().setUri(Uri.parse(track.getmStreamURL())).setTag(track).build();
-        player.addMediaItem(mediaItem);
-        player.next();
+        //player.addMediaItems(mediaItems);
+        player.seekToDefaultPosition();
+        player.setMediaItems(mediaItems);
+        //player.next();
         /*
         player = new SimpleExoPlayer.Builder(this).build();
         playerControlView.setPlayer(player);

@@ -44,6 +44,7 @@ import com.androiddreams.muzik.network.APIClient;
 import com.androiddreams.muzik.network.ServerInterface;
 import com.androiddreams.muzik.utilities.ColorPaletteGenerator;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -108,12 +109,15 @@ public class SearchFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.rvSearchResult);
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         SearchResultAdapter adapter = new SearchResultAdapter(getContext());
-        adapter.setmOnItemClickListener(track -> {
-//            Intent intent = new Intent(getContext(), MainActivity.class);
-//            intent.putExtra("KEY_TRACK_URL", track.getmStreanURL());
-//            startActivity(intent);
-//            // TODO: stop any other playing activity
-            onItemClickListener.onItemClick(track);
+        adapter.setmOnItemClickListener(new SearchResultAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                List<MediaItem> mediaItems = new ArrayList<>();
+                for (Track t : adapter.getTrackList().subList(position, adapter.getItemCount())) {
+                   mediaItems.add(new MediaItem.Builder().setUri(Uri.parse(t.getmStreamURL())).setTag(t).build());
+                }
+                onItemClickListener.onItemClick(mediaItems);
+            }
         });
 
         ServerInterface serverInterface = APIClient.getClient().create(ServerInterface.class);

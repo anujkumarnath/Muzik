@@ -1,7 +1,9 @@
 package com.androiddreams.muzik.Listeners;
 
-import com.androiddreams.muzik.models.Track;
+import com.google.android.exoplayer2.MediaItem;
+
+import java.util.List;
 
 public interface OnItemClickListener {
-    void onItemClick(Track track);
+    void onItemClick(List<MediaItem> mediaItems);
 }

@@ -31,7 +31,9 @@ import com.androiddreams.muzik.network.APIClient;
 import com.androiddreams.muzik.network.ServerInterface;
 import com.androiddreams.muzik.utilities.ColorPaletteGenerator;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.MediaItem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -58,7 +60,16 @@ public class LibraryFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         SearchResultAdapter adapter = new SearchResultAdapter(getContext());
 
-        adapter.setmOnItemClickListener(track -> onItemClickListener.onItemClick(track));
+        adapter.setmOnItemClickListener(new SearchResultAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                List<MediaItem> mediaItems = new ArrayList<>();
+                for (Track t : adapter.getTrackList().subList(position, adapter.getItemCount())) {
+                    mediaItems.add(new MediaItem.Builder().setUri(Uri.parse(t.getmStreamURL())).setTag(t).build());
+                }
+                onItemClickListener.onItemClick(mediaItems);
+            }
+        });
 
         ServerInterface serverInterface = APIClient.getClient().create(ServerInterface.class);
         SharedPreferences sp = getActivity().getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
