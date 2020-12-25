@@ -50,7 +50,7 @@ public class AuthActivity extends AppCompatActivity {
                     return;
                 }
                 if (!auth_type.equals("login") && !isPasswordValid(password)) {
-                    Toast.makeText(view.getContext(), "Password doesn't meet requirement", Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), "Password must be 8 characters long with at least 1 capital letter, 1 small letter, one special symbol", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -64,21 +64,32 @@ public class AuthActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                         if (response.body() != null) {
-                            Toast.makeText(AuthActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                            if (response.body().getMessage().equals("auth_successful")) {
-                                SharedPreferences sp = getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.putString("username", authRequest.getEmail());
-                                editor.putBoolean("is_logged_in", true);
-                                editor.apply();
-                                Intent mainActivityIntent = new Intent(AuthActivity.this, MainActivity.class);
-                                startActivity(mainActivityIntent);
+                            String message = response.body().getMessage();
+                            switch (message) {
+                                case "auth_successful":
+                                case "user_created":
+                                    SharedPreferences sp = getSharedPreferences("login_prefs", Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("username", authRequest.getEmail());
+                                    editor.putBoolean("is_logged_in", true);
+                                    editor.apply();
+                                    Intent mainActivityIntent = new Intent(AuthActivity.this, MainActivity.class);
+                                    startActivity(mainActivityIntent);
+                                    Toast.makeText(AuthActivity.this, "Welcome!", Toast.LENGTH_LONG).show();
+                                    break;
+                                case "mail_exists":
+                                    Toast.makeText(AuthActivity.this, "Email address already in use!", Toast.LENGTH_LONG).show();
+                                    break;
+                                case "auth_failed":
+                                    Toast.makeText(AuthActivity.this, "Wrong email of password!", Toast.LENGTH_LONG).show();
+                                    break;
                             }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<AuthResponse> call, Throwable t) {
+                        Toast.makeText(AuthActivity.this, "Please check your internet connection", Toast.LENGTH_LONG).show();
                         call.cancel();
                     }
                 });
@@ -87,6 +98,9 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(final String password){
+        if (password.length() < 8)
+            return false;
+
         Pattern pattern;
         Matcher matcher;
         final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
