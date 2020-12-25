@@ -91,8 +91,8 @@ public class PlayerActivity extends AppCompatActivity {
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round) // change placeholder
-                    .error(R.mipmap.ic_launcher_round);
+                    .placeholder(R.drawable.artwork_placeholder)
+                    .error(R.drawable.artwork_placeholder);
 
             Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).
                     listener(requestListener).
@@ -123,8 +123,8 @@ public class PlayerActivity extends AppCompatActivity {
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round) // change placeholder
-                    .error(R.mipmap.ic_launcher_round);
+                    .placeholder(R.drawable.artwork_placeholder)
+                    .error(R.drawable.artwork_placeholder);
 
             Glide.with(this).load(mArtworkURL).apply(options).into(ivArtwork);
         }
@@ -190,8 +190,8 @@ public class PlayerActivity extends AppCompatActivity {
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round) // change placeholder
-                    .error(R.mipmap.ic_launcher_round);
+                    .placeholder(R.drawable.artwork_placeholder)
+                    .error(R.drawable.artwork_placeholder);
 
             Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).
                     listener(requestListener).

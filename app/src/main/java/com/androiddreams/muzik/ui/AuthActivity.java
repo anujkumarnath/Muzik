@@ -81,7 +81,7 @@ public class AuthActivity extends AppCompatActivity {
                                     Toast.makeText(AuthActivity.this, "Email address already in use!", Toast.LENGTH_LONG).show();
                                     break;
                                 case "auth_failed":
-                                    Toast.makeText(AuthActivity.this, "Wrong email of password!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AuthActivity.this, "Wrong email or password!", Toast.LENGTH_LONG).show();
                                     break;
                             }
                         }

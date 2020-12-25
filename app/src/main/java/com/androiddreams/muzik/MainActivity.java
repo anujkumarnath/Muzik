@@ -253,8 +253,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round) // change placeholder
-                    .error(R.mipmap.ic_launcher_round);
+                    .placeholder(R.drawable.artwork_placeholder_small)
+                    .error(R.drawable.artwork_placeholder_small);
 
             Glide.with(getApplicationContext()).load(track.getmArtWorkURL()).apply(options).into(ivThumbnail);
         }

@@ -119,8 +119,8 @@ public class AudioService extends Service {
                             Thread thread = new Thread(() -> {
                                 RequestOptions options = new RequestOptions()
                                         .centerCrop()
-                                        .placeholder(R.mipmap.ic_launcher_round) // change placeholder
-                                        .error(R.mipmap.ic_launcher_round);
+                                        .placeholder(R.drawable.artwork_placeholder)
+                                        .error(R.drawable.artwork_placeholder);
                                 try {
                                     android.util.Log.d(TAG, "Call toh oise");
                                     Bitmap bitmap = Glide.with(getApplicationContext())

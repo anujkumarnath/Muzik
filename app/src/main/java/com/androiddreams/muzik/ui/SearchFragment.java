@@ -75,7 +75,7 @@ public class SearchFragment extends Fragment {
         TextInputEditText etSearch = root.findViewById(R.id.etSearch);
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         textView.setOnClickListener(view -> {
-            viewSwitcher.showNext();
+            viewSwitcher.show();
             etSearch.requestFocus();
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
             tvSearchPageInfo.setVisibility(View.GONE);
